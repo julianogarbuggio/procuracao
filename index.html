@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Formulário – Atendimento Jurídico Especializado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0f1222; --card:#171a2e; --ink:#e9ecff; --muted:#a9b0d6;
+      --pri:#6c8cff; --pri-ink:#0a0e2b; --warn:#ffd166; --border:#2a2e4b;
+      --accent:#b8c6ff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5}
+    .wrap{max-width:980px;margin:24px auto;padding:0 16px}
+    .hero{background:linear-gradient(180deg,#1c203d,#12152a);border:1px solid var(--border);border-radius:16px;padding:18px 18px 22px;margin-bottom:18px}
+    .brand{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .brand img{max-width:280px;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+    .brand h1{margin:0 0 6px;font-weight:800;letter-spacing:.8px;text-align:center}
+    .oabs{font-size:.82rem;color:var(--muted);margin-top:8px;text-align:right}
+    .subtitle{margin:.35rem 0 0;color:#fff;font-weight:700;text-align:center;font-size:1.08rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin:14px 0}
+    .grid{display:grid;gap:12px}
+    @media (min-width:720px){ .grid.cols-2{grid-template-columns:1fr 1fr} }
+    label{display:block;font-size:.88rem;color:var(--muted);margin:4px 0 6px}
+    input,select,textarea{width:100%;background:#0f1330;color:var(--ink);border:1px solid var(--border);border-radius:10px;padding:12px 12px;outline:none}
+    textarea{min-height:96px;resize:vertical}
+    .section-title{margin:0 0 8px;font-weight:700;font-size:1.06rem}
+    .hide{display:none}
+    .btns{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;background:var(--pri);color:var(--pri-ink)}
+    .req::after{content:" *";color:var(--warn);font-weight:700}
+    .callout{background:#13273a;border:1px solid #1b3953;padding:12px 14px;border-radius:12px;margin-top:16px}
+    a{color:var(--accent);text-decoration:none}
+    footer{text-align:center;margin:30px 0 20px;color:var(--muted);font-size:.85rem}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--border);border-radius:999px;margin:6px 8px 0 0;user-select:none}
+    .pill input{width:18px;height:18px;margin:0}
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);padding:10px 12px;border-radius:12px;min-height:44px}
+    .chip input{width:18px;height:18px;margin:0}
+    hr.sep{border:0;border-top:1px dashed var(--border);margin:14px 0}
+  </style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+  <div class="brand">
+    <img id="jg-logo" alt="Logo Juliano Garbuggio" width="280" height="120" />
+    <h1>JULIANO GARBUGGIO | ADVOCACIA &amp; CONSULTORIA</h1>
+  </div>
+  <div class="oabs">OAB/SP 505.598 &nbsp;|&nbsp; OAB/PR 47.565 &nbsp;|&nbsp; OAB/MG 234.362</div>
+  <p class="subtitle">Preencha seus dados para atendimento especializado.</p>
+</section>
+<form id="form" novalidate>
+  <!-- 1) CONTEXTO -->
+  <section class="card">
+    <h2 class="section-title">PREENCHA SEUS DADOS</h2>
+    <select id="motivo" class="hide" required aria-hidden="true"><option value="cadastro" selected>1 — Atualização de cadastro | Procuração</option></select>
+  </section>
+
+  <!-- 2) DADOS SIMPLES (para motivos 2,3,4) -->
+  <section class="card" id="sec-simples">
+    <h2 class="section-title">2) Dados para contato</h2>
+    <div class="grid cols-2">
+      <div><label class="req" for="nome_s">Nome completo</label><input id="nome_s" required></div>
+      <div><label class="req" for="cpf_s">CPF</label><input id="cpf_s" placeholder="000.000.000-00" required></div>
+
+      <!-- Identificação complementar (opcional) – SIMPLES -->
+      <div style="grid-column:1/-1">
+        <label>Identificação complementar (opcional)</label>
+        <div class="pill"><input type="checkbox" id="toggle_ident_s"> <span>Mostrar campos</span></div>
+      </div>
+      <div id="ident-comp-bloco-s" class="hide" style="grid-column:1/-1">
+        <div class="grid cols-2">
+          <div><label for="nome_social_s">Nome social</label><input id="nome_social_s" placeholder="Opcional"></div>
+          <div><label for="pronomes_s">Pronomes (ex.: ela/dela, ele/dele, elu/delu)</label><input id="pronomes_s" placeholder="Opcional"></div>
+        </div>
+        <hr class="sep">
+      </div>
+
+      <!-- Identidade de gênero (opcional) – SIMPLES -->
+      <div style="grid-column:1/-1">
+        <label>Auto Declaração – Identidade de Gênero (opcional)</label>
+        <div class="pill"><input type="checkbox" id="toggle_genero_s"> <span>Mostrar opções</span></div>
+        <div id="genero-opcoes-s" class="hide" style="margin-top:10px">
+          <div class="chips">
+            <label class="chip"><input type="checkbox" value="Mulher cisgênera"> Mulher cisgênera</label>
+            <label class="chip"><input type="checkbox" value="Homem cisgênero"> Homem cisgênero</label>
+            <label class="chip"><input type="checkbox" value="Mulher transgênera"> Mulher transgênera</label>
+            <label class="chip"><input type="checkbox" value="Homem transgênero"> Homem transgênero</label>
+            <label class="chip"><input type="checkbox" value="Travesti"> Travesti</label>
+            <label class="chip"><input type="checkbox" value="Não-binárie"> Não-binárie</label>
+            <label class="chip"><input type="checkbox" value="Prefiro não dizer"> Prefiro não dizer</label>
+            <label class="chip">Outro: <input id="genero_outro_s" placeholder="especifique" style="width:220px"></label>
+          </div>
+        </div>
+      </div>
+
+      <div><label class="req" for="cel_s">WhatsApp</label><input id="cel_s" required></div>
+      <div><label for="email_s">E-mail</label><input id="email_s" type="email" ></div>
+      <div><label class="req" for="cep_s">CEP</label><input id="cep_s" placeholder="00000-000" required></div>
+      <div><label class="req" for="cidadeuf_s">Cidade/UF</label><input id="cidadeuf_s" placeholder="Cidade/UF" required></div>
+
+      <div class="cols-2" style="grid-column:1/-1">
+        <label for="breve">Relate brevemente o motivo do contato</label>
+        <textarea id="breve" placeholder="Ex.: cobrança indevida, dúvida sobre contrato, etc."></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2) DADOS COMPLETOS (para motivo 1) -->
+  <section class="card hide" id="sec-completo">
+    <h2 class="section-title">DADOS PESSOAIS</h2>
+    <div class="grid cols-2">
+      <div><label class="req" for="nome">Nome completo</label><input id="nome"></div>
+
+      <!-- Identificação complementar (opcional) – COMPLETO -->
+      <div style="grid-column:1/-1">
+        <label>Identificação complementar (opcional)</label>
+        <div class="pill"><input type="checkbox" id="toggle_ident"> <span>Mostrar campos</span></div>
+      </div>
+      <div id="ident-comp-bloco" class="hide" style="grid-column:1/-1">
+        <div class="grid cols-2">
+          <div><label for="nome_social">Nome social</label><input id="nome_social" placeholder="Opcional"></div>
+          <div><label for="pronomes">Pronomes (ex.: ela/dela, ele/dele, elu/delu)</label><input id="pronomes" placeholder="Opcional"></div>
+        </div>
+        <hr class="sep">
+      </div>
+
+      <div>
+        <label class="req" for="nacionalidade">Nacionalidade</label>
+        <select id="nacionalidade">
+          <option>Brasileiro(a)</option>
+          <option>Outros</option>
+        </select>
+      </div>
+      <div id="nac_outros_wrap" class="hide"><label for="nac_outros">Qual?</label><input id="nac_outros"></div>
+
+      <div><label class="req" for="nasc">Data de nascimento (dd/mm/aaaa)</label><input id="nasc" placeholder="dd/mm/aaaa" inputmode="numeric" maxlength="10"></div>
+
+      <div>
+        <label class="req" for="ec">Estado civil</label>
+        <select id="ec">
+          <option value="">Selecione…</option>
+          <option>Solteira(o)</option>
+          <option>Casada(o)</option>
+          <option>União estável</option>
+          <option>Divorciada(o)</option>
+          <option>Viúva(o)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="req" for="prof">Profissão</label>
+        <select id="prof">
+          <option value="">Selecione a profissão</option>
+          <optgroup label="Área Administrativa e Financeira">
+            <option>Administrador</option><option>Assistente Administrativo</option><option>Secretário(a)</option><option>Contador</option><option>Analista Financeiro</option><option>Gestor de RH</option><option>Auxiliar de Escritório</option><option>Recepcionista</option><option>Office Boy / Mensageiro</option><option>Economista</option><option>Funcionário Público</option>
+          </optgroup>
+          <optgroup label="Área Técnica e Industrial">
+            <option>Engenheiro Civil</option><option>Engenheiro Elétrico</option><option>Técnico em Edificações</option><option>Técnico em Mecânica</option><option>Técnico em Eletrônica</option><option>Mecânico</option><option>Eletricista</option><option>Encanador</option><option>Operador de Máquinas</option><option>Soldador</option>
+          </optgroup>
+          <optgroup label="Comércio e Serviços">
+            <option>Comerciante</option><option>Vendedor</option><option>Representante Comercial</option><option>Caixa</option><option>Supervisor de Vendas</option><option>Garçom / Garçonete</option><option>Balconista</option><option>Atendente</option><option>Motorista</option><option>Entregador</option>
+          </optgroup>
+          <optgroup label="Saúde e Bem-Estar">
+            <option>Médico</option><option>Enfermeiro</option><option>Técnico de Enfermagem</option><option>Dentista</option><option>Fisioterapeuta</option><option>Psicólogo</option><option>Nutricionista</option><option>Farmacêutico</option><option>Cuidador de Idosos</option><option>Esteticista</option><option>Biomédico</option>
+          </optgroup>
+          <optgroup label="Educação e Cultura">
+            <option>Professor</option><option>Pedagogo</option><option>Bibliotecário</option><option>Coordenador Escolar</option><option>Instrutor / Educador Social</option><option>Tradutor / Intérprete</option>
+          </optgroup>
+          <optgroup label="Construção Civil">
+            <option>Pedreiro</option><option>Servente</option><option>Mestre de Obras</option><option>Pintor</option><option>Carpinteiro</option><option>Azulejista</option><option>Jardineiro</option>
+          </optgroup>
+          <optgroup label="Tecnologia da Informação">
+            <option>Analista de Sistemas</option><option>Desenvolvedor</option><option>Programador</option><option>Suporte Técnico</option><option>Técnico de Informática</option><option>Designer Gráfico</option><option>Analista de Dados</option>
+          </optgroup>
+          <optgroup label="Jurídico e Contábil">
+            <option>Advogado</option><option>Estagiário de Direito</option><option>Técnico Contábil</option><option>Perito</option><option>Consultor Jurídico</option>
+          </optgroup>
+          <optgroup label="Beleza, Moda e Estética">
+            <option>Cabeleireiro</option><option>Manicure / Pedicure</option><option>Maquiador</option><option>Costureiro</option><option>Designer de Sobrancelhas</option><option>Consultor de Moda</option>
+          </optgroup>
+          <optgroup label="Segurança e Transporte">
+            <option>Policial</option><option>Bombeiro</option><option>Vigilante</option><option>Segurança Patrimonial</option><option>Motorista Particular</option><option>Motoboy</option>
+          </optgroup>
+          <optgroup label="Agricultura e Campo">
+            <option>Agricultor</option><option>Pecuarista</option><option>Trabalhador Rural</option><option>Pescador</option><option>Jardineiro</option>
+          </optgroup>
+          <optgroup label="Turismo e Hotelaria">
+            <option>Guia Turístico</option><option>Agente de Viagens</option><option>Recepcionista de Hotel</option><option>Camareira</option><option>Cozinheiro / Chef</option><option>Garçom</option>
+          </optgroup>
+          <optgroup label="Artes e Comunicação">
+            <option>Jornalista</option><option>Publicitário</option><option>Fotógrafo</option><option>Designer</option><option>Músico</option><option>Artista Plástico</option><option>Redator</option>
+          </optgroup>
+          <option value="OUTROS">OUTROS</option>
+        </select>
+      </div>
+      <div id="prof_outros_wrap" class="hide"><label for="prof_outros">Outra profissão</label><input id="prof_outros" placeholder="Especifique"></div>
+
+      <div><label class="req" for="rg">RG</label><input id="rg"></div>
+      <div><label class="req" for="rguf">UF do RG</label>
+        <select id="rguf">
+          <option value="">UF</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
+        </select>
+      </div>
+      <div><label class="req" for="cpf">CPF</label><input id="cpf" placeholder="000.000.000-00"></div>
+    </div>
+
+    <!-- Gênero (opcional) -->
+    <div style="margin-top:8px">
+      <label>Auto Declaração – Identidade de Gênero (opcional)</label>
+      <div class="pill"><input type="checkbox" id="toggle_genero"> <span>Mostrar opções</span></div>
+      <div id="genero-opcoes" class="hide" style="margin-top:10px">
+        <div class="chips">
+          <label class="chip"><input type="checkbox" value="Mulher cisgênera"> Mulher cisgênera</label>
+          <label class="chip"><input type="checkbox" value="Homem cisgênero"> Homem cisgênero</label>
+          <label class="chip"><input type="checkbox" value="Mulher transgênera"> Mulher transgênera</label>
+          <label class="chip"><input type="checkbox" value="Homem transgênero"> Homem transgênero</label>
+          <label class="chip"><input type="checkbox" value="Travesti"> Travesti</label>
+          <label class="chip"><input type="checkbox" value="Não-binárie"> Não-binárie</label>
+          <label class="chip"><input type="checkbox" value="Prefiro não dizer"> Prefiro não dizer</label>
+          <label class="chip">Outro: <input id="genero_outro" placeholder="especifique" style="width:220px"></label>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:14px">Endereço</h2>
+    <div class="grid cols-2">
+      <div><label class="req" for="cep">CEP</label><input id="cep" placeholder="00000-000"></div>
+      <div><label class="req" for="rua">Rua / Avenida</label><input id="rua"></div>
+      <div><label class="req" for="num">Número</label><input id="num"></div>
+      <div><label for="compl">Complemento</label><input id="compl"></div>
+      <div><label class="req" for="bairro">Bairro</label><input id="bairro"></div>
+      <div><label class="req" for="uf">UF</label>
+        <select id="uf">
+          <option value="">UF</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
+        </select>
+      </div>
+      <div><label class="req" for="cidade">Cidade</label><input id="cidade"></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:14px">Contato</h2>
+    <div class="grid cols-2">
+      <div><label class="req" for="ddd">WhatsApp — DDD</label><input id="ddd"></div>
+      <div><label class="req" for="cel">Número</label><input id="cel" ></div>
+      <div><label class="req" for="email">E-mail</label><input id="email" type="email" ></div>
+    </div>
+  </section>
+
+  <!-- LGPD -->
+  <section class="card callout">
+    <p><strong>Envio direto ao WhatsApp Business de Juliano Garbuggio:</strong> ao prosseguir, o conteúdo será preparado para envio no aplicativo. Seus dados serão tratados exclusivamente para fins de atendimento confidencial de seu caso, conforme a LGPD (Lei nº 13.709/2018) e o art. 25 do Código de Ética da OAB (sigilo profissional).</p>
+    <label><input type="checkbox" id="lgpd" required> Li e concordo com o Aviso de Privacidade acima e autorizo o envio desta solicitação via WhatsApp Business (+55 11 95675-9223).</label>
+  </section>
+
+  <section class="card"><div class="btns"><button class="btn" id="btn-enviar" type="submit">Salvar + Enviar WhatsApp</button></div></section>
+</form>
+
+<footer>
+  © 2025 Juliano Garbuggio – Advocacia & Consultoria — <a href="https://www.julianogarbuggio.adv.br" target="_blank">www.julianogarbuggio.adv.br</a> — <a href="https://wa.me/5511956759223" target="_blank">(11) 95675-9223</a><br>
+  Juliano Garbuggio Sociedade Individual de Advocacia — OAB/SP 54.923 | CNPJ 35.142.789/0001-08
+</footer>
+</div>
+<script>
+  /* ========= LOGO =========
+     Se quiser embutir (base64), preencha LOGO_DATA_URI.
+     Senão, ele testa na ordem abaixo até achar a primeira que carrega. */
+  const LOGO_DATA_URI = "";
+  const logoCandidates = [
+    "logo-juliano-garbuggio.png",
+    "logo-juliano-garbuggio.png.webp",
+    "logobranca_juliano_garbuggio.webp",
+    "/logo-juliano-garbuggio.png"
+  ];
+  function loadFirstWorkingImage(cands){
+    return new Promise(resolve=>{
+      if(LOGO_DATA_URI) return resolve(LOGO_DATA_URI);
+      let i=0;
+      const go=()=>{
+        if(i>=cands.length) return resolve("");
+        const url=cands[i++], img=new Image();
+        img.onload=()=>resolve(url);
+        img.onerror=go;
+        img.src=url+"?v="+Date.now();
+      };
+      go();
+    });
+  }
+  loadFirstWorkingImage(logoCandidates).then(src=>{
+    const el=document.getElementById("jg-logo");
+    if(!el) return;
+    if(src){ el.src=src; el.removeAttribute("aria-hidden"); }
+    else{
+      el.outerHTML = '<div style="width:100%;max-width:280px;text-align:center;font-weight:800;letter-spacing:.06em;">Juliano Garbuggio</div>';
+    }
+  });
+
+  /* ========= HELPERS ========= */
+  const $  = s=>document.querySelector(s);
+  const $$ = s=>Array.from(document.querySelectorAll(s));
+  const isMobile = ()=>/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+  // máscaras
+  const maskCPF =(el)=>{let v=el.value.replace(/\D/g,"").slice(0,11);el.value=v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/,"$1.$2.$3-$4");};
+  const maskCEP =(el)=>{let v=el.value.replace(/\D/g,"").slice(0,8); el.value=v.replace(/^(\d{5})(\d{0,3}).*/,"$1-$2");};
+  const maskDDD =(el)=>{el.value=el.value.replace(/\D/g,"").slice(0,2);};
+  const maskFone=(el)=>{el.value=el.value.replace(/\D/g,"").slice(0,9).replace(/^(\d{5})(\d{4}).*/,"$1-$2");};
+  const maskData=(el)=>{let v=el.value.replace(/\D/g,"").slice(0,8); el.value=v.replace(/^(\d{2})(\d{2})(\d{0,4}).*/,"$1/$2/$3");};
+
+  const isValidCPF=(cpf)=>{
+    cpf=(cpf||"").replace(/\D/g,"");
+    if(cpf.length!==11 || /^([0-9])\1+$/.test(cpf)) return false;
+    let s=0; for(let i=0;i<9;i++) s+=cpf[i]*(10-i);
+    let r=11-(s%11); if(r>=10) r=0; if(r!=cpf[9]) return false;
+    s=0; for(let i=0;i<10;i++) s+=cpf[i]*(11-i);
+    r=11-(s%11); if(r>=10) r=0; return r==cpf[10];
+  };
+
+  // ViaCEP
+  async function viaCEP(cep){
+    try{
+      const r=await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const j=await r.json();
+      return j.erro?null:j;
+    }catch{return null}
+  }
+  async function autoCEP(cepEl,cidadeEl,ufEl,ruaEl,bairroEl,cidadeCompactEl){
+    const raw=(cepEl.value||"").replace(/\D/g,"");
+    if(raw.length!==8) return;
+    const j=await viaCEP(raw);
+    // sempre limpa antes, pra não “grudar” cidade/UF anterior
+    if(cidadeEl) cidadeEl.value="";
+    if(ufEl)     ufEl.value="";
+    if(ruaEl)    ruaEl.value="";
+    if(bairroEl) bairroEl.value="";
+    if(cidadeCompactEl) cidadeCompactEl.value="";
+    if(!j) return;
+    if(cidadeEl) cidadeEl.value=j.localidade||"";
+    if(ufEl)     ufEl.value=j.uf||"";
+    if(ruaEl)    ruaEl.value=j.logradouro||"";
+    if(bairroEl) bairroEl.value=j.bairro||"";
+    if(cidadeCompactEl) cidadeCompactEl.value=`${j.localidade||""}/${j.uf||""}`;
+  }
+
+  const gerarProtocolo=()=>{
+    const d=new Date(), p=n=>String(n).padStart(2,"0");
+    return `JG-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}-${Math.floor(1000+Math.random()*8999)}`;
+  };
+
+  /* ========= COLETA ========= */
+  function coletaSimples(){
+    const generoChecks = $$("#genero-opcoes-s input[type='checkbox']:checked").map(c=>c.value);
+    return {
+      motivo: $("#motivo").value,
+      tipo: ($$("input[name='tipo']").find(r=>r.checked)||{}).value||"—",
+      nome: $("#nome_s").value.trim(),
+      cpf: $("#cpf_s").value.trim(),
+      cel: $("#cel_s").value.trim(),
+      email: $("#email_s").value.trim(),
+      cep: $("#cep_s").value.trim(),
+      cidadeuf: $("#cidadeuf_s").value.trim(),
+      breve: $("#breve").value.trim(),
+      nome_social: $("#nome_social_s")?.value.trim()||"",
+      pronomes: $("#pronomes_s")?.value.trim()||"",
+      ident_genero_list: generoChecks,
+      genero_outro: $("#genero_outro_s")?.value.trim()||""
+    };
+  }
+
+  function coletaCompleta(){
+    const generoChecks = $$("#genero-opcoes input[type='checkbox']:checked").map(c=>c.value);
+    return {
+      motivo: $("#motivo").value,
+      nome: $("#nome").value.trim(),
+      nacionalidade: $("#nacionalidade").value,
+      nac_outros: ($("#nac_outros")?.value||"").trim(),
+      nasc: $("#nasc").value.trim(),
+      ec: $("#ec").value,
+      prof: $("#prof").value==="OUTROS"?($("#prof_outros").value.trim()||"OUTROS"):$("#prof").value,
+      rg: $("#rg").value.trim(),
+      rguf: $("#rguf").value,
+      cpf: $("#cpf").value.trim(),
+      // endereço
+      rua: $("#rua").value.trim(),
+      num: $("#num").value.trim(),
+      compl: $("#compl").value.trim(),
+      bairro: $("#bairro").value.trim(),
+      cep: $("#cep").value.trim(),
+      cidade: $("#cidade").value.trim(),
+      uf: $("#uf").value,
+      // contato
+      ddd: $("#ddd").value.trim(),
+      cel: $("#cel").value.trim(),
+      email: $("#email").value.trim(),
+      // identificação complementar + gênero
+      nome_social: $("#nome_social")?.value.trim()||"",
+      pronomes: $("#pronomes")?.value.trim()||"",
+      ident_genero_list: generoChecks,
+      genero_outro: $("#genero_outro")?.value.trim()||""
+    };
+  }
+
+  /* ========= VALIDAÇÃO ========= */
+  function showErrors(list){ alert("Ajuste:\n• "+list.join("\n• ")); }
+  function validaSimples(d){
+    const falt=[];
+    if(!d.nome) falt.push("NOME");
+    if(!d.cpf || !isValidCPF(d.cpf)) falt.push("CPF inválido");
+    const celRaw=d.cel.replace(/\D/g,"");
+    if(!(celRaw.length===11 || celRaw.length===9)) falt.push("WhatsApp inválido");
+    if(!/^\d{5}-?\d{3}$/.test(d.cep)) falt.push("CEP inválido");
+    if(!d.cidadeuf) falt.push("CIDADE/UF");
+    if(!$("#lgpd").checked) falt.push("Concorde com o Aviso de Privacidade");
+    if(falt.length){ showErrors(falt); return false; }
+    return true;
+  }
+  function validaCompleta(d){
+    const falt=[];
+    ["nome","nacionalidade","nasc","ec","prof","rg","rguf","cpf","rua","num","bairro","cep","cidade","uf","ddd","cel","email"].forEach(k=>{ if(!d[k]) falt.push(k.toUpperCase()); });
+    if(!isValidCPF(d.cpf)) falt.push("CPF inválido");
+    if(!/^\d{2}$/.test(d.ddd)) falt.push("DDD inválido");
+    if(d.cel.replace(/\D/g,"").length!==9) falt.push("WhatsApp inválido");
+    if(!/^\d{5}-?\d{3}$/.test(d.cep)) falt.push("CEP inválido");
+    if(!$("#lgpd").checked) falt.push("Concorde com o Aviso de Privacidade");
+    if(falt.length){ showErrors(falt); return false; }
+    return true;
+  }
+
+  /* ========= MENSAGENS ========= */
+
+  // FORMATO EXATO solicitado para motivo 1 (cadastro | procuração)
+  function montarMsgCompletaEspecial(d, protocolo){
+    const nac = d.nacionalidade + (d.nacionalidade==="Outros" && d.nac_outros ? ` (${d.nac_outros})` : "");
+    return [
+      `📝 Novo cadastro – *${d.nome}*`,
+      "",
+      `Nome completo: ${d.nome}`,
+      `Nacionalidade: ${nac}`,
+      `Data de nascimento: ${d.nasc}`,
+      `Estado civil: ${d.ec}`,
+      `Profissão: ${d.prof}`,
+      `RG: ${d.rg} - ESTADO: ${d.rguf}`,
+      `CPF: ${d.cpf}`,
+      `ENDEREÇO COMPLETO: ${d.rua}, nº: ${d.num}, complemento: ${d.compl||""}`,
+      `Bairro: ${d.bairro}`,
+      `CEP: ${d.cep}`,
+      `CIDADE: ${d.cidade}, ESTADO: ${d.uf}`,
+      `WhatsApp COM DDD: ${d.ddd} ${d.cel}`,
+      `E-mail: ${d.email}`,
+      `Protocolo: ${protocolo}`,
+      "",
+      "Li e concordo com o Aviso de Privacidade acima e autorizo o envio desta solicitação via WhatsApp Business (+55 11 95675-9223)."
+    ].join("\n");
+  }
+
+  
+  function motivoLabel(v){
+    const map = {
+      cadastro: "1 — Atualização de cadastro | Procuração",
+      emprestimos: "2 — Info Revisões de Empréstimos (bancos)",
+      outras_acoes: "3 — Info Outras Ações",
+      duvidas: "4 — Outras dúvidas, sugestões, críticas"
+    };
+    return map[v] || v || "—";
+  }
+
+// Mensagem do modo simples (motivos 2,3,4)
+  function montarMsgSimples(d, protocolo){
+    const identGeneros = (d.ident_genero_list||[]).join(", ");
+    return [
+      `📝 Novo cadastro – *${d.nome}*`,
+      "",
+      `Motivo: ${$("#motivo").selectedOptions[0].text}`,
+      `CPF: ${d.cpf} | WhatsApp: ${d.cel}`,
+      d.email?`E-mail: ${d.email}`:"",
+      `Cidade/UF: ${d.cidadeuf}`,
+      d.breve?`Descrição: ${d.breve}`:"",
+      identGeneros?`Identidade(s) de gênero: ${identGeneros}${d.genero_outro? " — "+d.genero_outro:""}`:"",
+      `Protocolo: ${protocolo}`,
+      "",
+      "Li e concordo com o Aviso de Privacidade acima e autorizo o envio desta solicitação via WhatsApp Business (+55 11 95675-9223)."
+    ].filter(Boolean).join("\n");
+  }
+
+  // Envio EXCLUSIVO para o seu número
+  function abrirWhatsApp(msg){
+    const phone="5511956759223"; // fixo e exclusivo
+    const url=`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    if (isMobile()) window.location.assign(url); else window.open(url,"_blank","noopener,noreferrer");
+  }
+
+  /* ========= UI / MODO ========= */
+  function toggleModo(){
+    const v=$("#motivo").value;
+    // tudo escondido
+    $("#sec-completo")?.classList.add("hide");
+    $("#sec-simples")?.classList.add("hide");
+    $("#tipo_wrap")?.classList.add("hide");
+
+    if(v==="cadastro"){           // opção 1
+      $("#sec-completo")?.classList.remove("hide");
+    }else if(v==="emprestimos"){  // opção 2
+      $("#sec-simples")?.classList.remove("hide");
+      $("#tipo_wrap")?.classList.remove("hide");
+    }else{                        // opções 3 e 4
+      $("#sec-simples")?.classList.remove("hide");
+    }
+  }
+
+  /* ========= BINDS ========= */
+  function binds(){
+    // toggles (estáveis no mobile)
+    $("#toggle_ident")?.addEventListener("change",e=>$("#ident-comp-bloco").classList.toggle("hide", !e.target.checked));
+    $("#toggle_ident_s")?.addEventListener("change",e=>$("#ident-comp-bloco-s").classList.toggle("hide", !e.target.checked));
+    $("#toggle_genero")?.addEventListener("change",e=>$("#genero-opcoes").classList.toggle("hide", !e.target.checked));
+    $("#toggle_genero_s")?.addEventListener("change",e=>$("#genero-opcoes-s").classList.toggle("hide", !e.target.checked));
+
+    // máscaras
+    $("#cpf")?.addEventListener("input",e=>maskCPF(e.target));
+    $("#cpf_s")?.addEventListener("input",e=>maskCPF(e.target));
+    $("#nasc")?.addEventListener("input",e=>maskData(e.target));
+    $("#ddd")?.addEventListener("input",e=>maskDDD(e.target));
+    $("#cel")?.addEventListener("input",e=>maskFone(e.target));
+    $("#cep")?.addEventListener("input",e=>maskCEP(e.target));
+    $("#cep_s")?.addEventListener("input",e=>maskCEP(e.target));
+
+    $("#cep")?.addEventListener("blur",()=>autoCEP($("#cep"),$("#cidade"),$("#uf"),$("#rua"),$("#bairro")));
+    $("#cep_s")?.addEventListener("blur",()=>autoCEP($("#cep_s"),null,null,null,null,$("#cidadeuf_s")));
+
+    // extras
+    $("#nacionalidade")?.addEventListener("change",()=>$("#nac_outros_wrap").classList.toggle("hide", $("#nacionalidade").value!=="Outros"));
+    $("#prof")?.addEventListener("change",()=>$("#prof_outros_wrap").classList.toggle("hide", $("#prof").value!=="OUTROS"));
+
+    // alternância de motivo
+    $("#motivo")?.addEventListener("change",toggleModo);
+    toggleModo();
+
+    // submit
+    $("#form").addEventListener("submit",e=>{
+      e.preventDefault();
+      const v=$("#motivo").value;
+      const modo = (v==="cadastro") ? "completo" : "simples";
+      const d = (modo==="completo") ? coletaCompleta() : coletaSimples();
+
+      const ok = (modo==="completo") ? validaCompleta(d) : validaSimples(d);
+      if(!ok) return;
+
+      const protocolo = gerarProtocolo();
+      const msg = (modo==="completo") ? montarMsgCompletaEspecial(d, protocolo) : montarMsgSimples(d, protocolo);
+      abrirWhatsApp(msg);
+    });
+  }
+  document.readyState==="loading" ? document.addEventListener("DOMContentLoaded",binds) : binds();
+</script>
+</body>
+</html>
